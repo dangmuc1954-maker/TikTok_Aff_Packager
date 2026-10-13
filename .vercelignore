@@ -1,0 +1,12 @@
+# Bỏ qua dữ liệu video nặng và file Windows khi deploy Vercel
+output
+output/
+sample_videos
+sample_videos/
+temp_uploads
+temp_uploads/
+cloudflared.exe
+cloudflared.log
+__pycache__
+*.pyc
+.git
