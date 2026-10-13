@@ -440,42 +440,8 @@ def render_locked_page(meta):
 
 @app.before_request
 def restrict_remote_admin_access():
-    """Bảo mật: Khách hàng ngoài Internet chỉ xem được /view/... không vào được trang chỉnh sửa Studio"""
-    if os.environ.get("ALLOW_REMOTE_ADMIN", "").lower() in ["1", "true", "yes"]:
-        return
-    host = request.host.lower()
-    is_local = any(h in host for h in ['127.0.0.1', 'localhost', '::1', '0.0.0.0'])
-    if not is_local:
-        # Request từ mạng ngoài (qua Cloudflare Tunnel)
-        allowed = (
-            request.path.startswith('/view/') or
-            request.path.startswith('/download-zip/') or
-            request.path.startswith('/static/') or
-            request.path.startswith('/api/sync-progress') or
-            request.path == '/favicon.ico'
-        )
-        if not allowed:
-            return """<!DOCTYPE html>
-            <html lang="vi">
-            <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>403 - Khu Vực Riêng Tư</title>
-                <style>
-                    body { background: #080c14; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-                    .box { background: #131b2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 36px; text-align: center; max-width: 440px; }
-                    h1 { color: #ff0050; font-size: 20px; margin-bottom: 12px; }
-                    p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
-                </style>
-            </head>
-            <body>
-                <div class="box">
-                    <div style="font-size: 44px; margin-bottom: 12px;">🔒</div>
-                    <h1>KHU VỰC QUẢN TRỊ NỘI BỘ</h1>
-                    <p>Trang tạo gói và chỉnh sửa video này chỉ được phép truy cập từ máy chủ nội bộ (Localhost).<br><br>Khách hàng vui lòng truy cập đúng đường link bàn giao video được cung cấp riêng.</p>
-                </div>
-            </body>
-            </html>""", 403
+    """Đã mở khóa: Cho phép truy cập trang quản trị trực tiếp trên Vercel và Internet"""
+    pass
 
 @app.route("/api/sync-progress", methods=["POST"])
 def api_sync_progress():
