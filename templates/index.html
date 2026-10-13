@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Aff Studio - Chọn Video & Ghép Link Giỏ Hàng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #080c14;
+            --bg-card: #131b2e;
+            --bg-card-hover: #1c2640;
+            --bg-input: #0a0f1d;
+            --accent-pink: #ff0050;
+            --accent-cyan: #00f2fe;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 242, 254, 0.35);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 0, 80, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.08) 0px, transparent 50%);
+        }
+
+        /* Top Navbar */
+        nav {
+            background: rgba(14, 21, 38, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(255, 0, 80, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-text h1 span {
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        /* Main Container */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Form elements */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sub);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-text, .textarea {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input-text:focus, .textarea:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent-pink), #e11d48);
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(255, 0, 80, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 80, 0.5);
+        }
+
+        .btn-cyan {
+            background: linear-gradient(90deg, #00c6ff, var(--accent-cyan));
+            color: #000;
+            font-weight: 800;
+        }
+
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 11px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Drop Zone */
+        .file-select-zone {
+            background: rgba(0, 0, 0, 0.25);
+            border: 2px dashed rgba(0, 242, 254, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.25s;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .file-select-zone:hover, .file-select-zone.dragover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.05);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+
+        .select-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Bulk Links Box */
+        .bulk-links-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Video Items Table */
+        .video-table-wrapper {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+
+        .video-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .video-table th {
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-sub);
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .video-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+
+        .video-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .table-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 6px 10px;
+            color: #fff;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .table-input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .row-order-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Result Box */
+        .result-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        /* History */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 540px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .history-item:hover {
+            border-color: var(--border-glow);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent-pink);
+            border-right-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 14px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 980px) {
+            .app-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Nav -->
+    <nav>
+        <div class="brand">
+            <div class="brand-logo">🎬</div>
+            <div class="brand-text">
+                <h1>TikTok Aff <span>Studio</span></h1>
+                <p>Chọn từng video & tự động ghép link giỏ hàng TikTok Shop chuẩn xác 100%</p>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-cyan" onclick="createDemoSample()">
+                ⚡ Tạo Thử Gói 5 Video Mẫu
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="app-layout">
+        <!-- Left: Studio Config & Video Alignment Board -->
+        <div>
+            <!-- Project Metadata -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📝</span>
+                        <span>Thông Tin Dự Án Bàn Giao</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Tên Khách Hàng</label>
+                        <input type="text" id="client_name" class="input-text" value="Shop Anh Nam - TikTok Affiliate">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Tên Gói Video</label>
+                        <input type="text" id="project_title" class="input-text" value="Bộ 50 Video Hàng Hot Trend TikTok Shop">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Selection & Pairing Board -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📹</span>
+                        <span>Chọn Video & Khớp Link Giỏ Hàng</span>
+                        <span id="selected-count-badge" style="font-size: 12px; background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); padding: 2px 10px; border-radius: 12px; margin-left: 8px;">0 video đã chọn</span>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-cyan btn-sm" onclick="restoreLast5Videos()">♻️ Khôi Phục 5 Video Vừa Nhập</button>
+                        <button class="btn btn-outline btn-sm" onclick="clearAllVideos()">🗑️ Xóa hết</button>
+                    </div>
+                </div>
+
+                <!-- Drop & Pick Zone -->
+                <div class="file-select-zone" id="drop-zone">
+                    <div style="font-size: 36px;">📂</div>
+                    <div style="font-size: 15px; font-weight: 700; color: #fff;">
+                        Chọn các file video cần giao cho khách
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-sub);">
+                        Bạn có thể chọn 10, 20, 50 file cùng lúc bằng cách giữ <strong>Ctrl</strong> hoặc <strong>Shift</strong>
+                    </div>
+
+                    <div class="select-actions" onclick="event.stopPropagation();">
+                        <button class="btn btn-cyan" onclick="pickFilesWindowsDialog()">
+                            📂 Chọn File Từ Máy (Hộp thoại Windows)
+                        </button>
+                        
+                        <label class="btn btn-outline" style="cursor: pointer; margin-bottom: 0;">
+                            📤 Kéo thả / Chọn từ Trình duyệt
+                            <input type="file" id="browser-file-input" multiple accept="video/*" style="display: none;" onchange="handleBrowserFiles(this.files)">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quick Bulk Link Matcher -->
+                <div class="bulk-links-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 13px; font-weight: 700; color: var(--accent-pink);">
+                            📋 Dán Nhanh Danh Sách Link Giỏ Hàng (Mỗi link 1 dòng):
+                        </span>
+                        <button class="btn btn-outline btn-sm" onclick="applyBulkLinks()">
+                            ⚡ Tự Động Điền Vào Từng Video Bên Dưới
+                        </button>
+                    </div>
+                    <textarea id="bulk_links_input" class="textarea" style="min-height: 80px; font-size: 12px;" placeholder="Dán danh sách các link giỏ hàng TikTok vào đây (mỗi dòng 1 link)...
+https://vt.tiktok.com/ZS2x01/
+https://vt.tiktok.com/ZS2x02/
+https://vt.tiktok.com/ZS2x03/"></textarea>
+                </div>
+
+                <!-- Video Items Table -->
+                <div class="video-table-wrapper">
+                    <table class="video-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">STT</th>
+                                <th style="width: 180px;">File Video</th>
+                                <th style="width: 220px;">Tên Sản Phẩm (Hiển thị)</th>
+                                <th>Link Giỏ Hàng TikTok Shop</th>
+                                <th style="width: 80px; text-align: center;">Đổi Vị Trí</th>
+                                <th style="width: 50px; text-align: center;">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="video-table-body">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-dim);">
+                                    Chưa có video nào. Hãy bấm <strong>"Chọn File Từ Máy"</strong> hoặc kéo thả video vào khung phía trên!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="margin-top: 24px;">
+                    <button class="btn btn-primary" style="width: 100%; font-size: 16px; padding: 15px;" onclick="submitCustomPackage()">
+                        🚀 XUẤT GÓI GIAO KHÁCH (HTML DASHBOARD + EXCEL + ZIP)
+                    </button>
+                </div>
+
+                <!-- Result Box -->
+                <div class="result-box" id="result-box">
+                    <div style="font-size: 16px; font-weight: 700; color: var(--accent-green); display: flex; align-items: center; gap: 8px;">
+                        <span>🎉</span>
+                        <span>ĐÃ TẠO GÓI BÀN GIAO THÀNH CÔNG!</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-sub); margin-top: 6px;" id="result-desc"></p>
+                    <div class="result-links-grid">
+                        <button class="btn btn-cyan" onclick="openPath(currentResult.html_url)">
+                            🌐 Mở Dashboard HTML
+                        </button>
+                        <button class="btn btn-outline" onclick="openPath(currentResult.folder_url)">
+                            📁 Mở Thư Mục Bàn Giao
+                        </button>
+                        <button class="btn btn-outline" style="grid-column: 1 / -1;" onclick="openPath(currentResult.zip_url)">
+                            📦 Mở File ZIP Gửi Khách
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Recent Packages History -->
+        <div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📦</span>
+                        <span>Các Gói Đã Tạo</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="loadPackages()">🔄</button>
+                </div>
+
+                <div class="history-list" id="history-list">
+                    <div style="text-align: center; padding: 30px; color: var(--text-dim); font-size: 12px;">
+                        Đang tải...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <div style="font-size: 16px; font-weight: 700; color: #fff;" id="loading-text">Đang xử lý...</div>
+        <div style="font-size: 12px; color: var(--text-sub); margin-top: 6px;">Vui lòng chờ trong giây lát</div>
+    </div>
+
+    <script>
+        const DRAFT_KEY = 'tiktok_aff_draft_data_v1';
+        let videoList = [];
+        let currentResult = null;
+
+        const RECOVERED_5_VIDEOS = [
+            {
+                id: "vid_1",
+                filename: "01_LỌ TỎA HƯƠNG.mp4",
+                filepath: "d:/dự án antigravity/TikTok_Aff_Packager/output/Goi_Video_TikTokAff_Shop_Anh_Nam_-_TikTok_Affiliat_20260901_154110/videos/01_LỌ TỎA HƯƠNG.mp4",
+                title: "LỌ TỎA HƯƠNG",
+                size_mb: 2.3,
+                affiliate_link: "https://shop.tiktok.com/vn/pdp/1729615199504075032?_d=ekk0252j25jj76&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007680474764955502354%22%2C%22sc%22%3A%22copy%22%7D&checksum=4a9c896577fa025592eb4bd4d852923726fc5b7f9e12873c1ddcceba0aa9d084&encode_params=MIIBUwQMPlEEprPihqSU9P3DBIIBLx_VSAjIjHN58go43hHHWaFeVfDCXTYqlF_6sTggAS8Yq11iQ4wcCUAAYo_A70ZY2sFbPC5r3LbITSv-e7H-ZKR4pM1W0eHau_av51yn395BSbhag-edQvu1ojyiQOZSjnkvHbWUtAla8Asvuw4R10idpqQZXONkrG6dzgVzes7IUciLOsH8Il_vHShcPrty1js3Qt07iFfXkJY0IeaaC97xSsIewwBECDuHcl_4QUXeTEwyNKQ3I9ehlzbH5MrAN-BcRkVvXj01GHmncvpqE4mf19346M3kM883mwGeMpbK_IIhc5b0I8MAXyzLfxsBuUJVUK4C71dJtX-nT4D30r-3LxJ0mCKuUb642lPu5gpSdbXQrR6GI-CL9ZWgfaTCgjIO_tCf8M_6A3zn0uFNfwQQqX1Loz4H-_sBKIauwSuw6g%3D%3D&og_info=%7B%22title%22%3A%22%5BBA%CC%81N+CHA%CC%A3Y%5D+L%E1%BB%8D+T%E1%BB%8Fa+H%C6%B0%C6%A1ng+Lovenose+C%C3%B4ng+Th%E1%BB%A9c+M%E1%BB%9Bi+-+Tinh+D%E1%BA%A7u+Th%C6%A1m+Ph%C3%B2ng+-+Th%C6%A1m+360+%C4%91%E1%BB%99%2C+Thanh+L%E1%BB%8Dc+Kh%C3%B4ng+Kh%C3%AD%2C+Kh%E1%BB%AD+M%C3%B9i+Ph%C3%B2ng+Th%E1%BA%BF+H%E1%BB%87+M%E1%BB%9Bi%3B+D%E1%BA%A7u+Th%C6%A1m+Ph%C3%B2ng+D%E1%BA%A7u+Th%C6%A1m+nuoc+thom%2C+N%C6%B0%E1%BB%9Bc+Hoa%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2Fcd38dca6f5da4bfca43f68fda0506974~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAm-euwMH0a4ncZyHR8hFJoAtfXSKCpS5w7JkkVf6Z-B9tF3vgZq5VeDLcoUS5Vc6A&share_app_id=1233&share_iid=7680450628183164680&share_link_id=c1325d51-e6e5-4e5a-9bc8-4ab3909cd2fc&share_region=VN&social_share_type=15&timestamp=1788249893&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227513861754406323720%22%7D&u_code=dll01kl42bi47g&ug_btm=b0813%2Cb6661&ugbiz_name=UNKNOWN&unique_id=thichmacdep57&user_id=7032692262644712449&utm_campaign=client_share&utm_medium=android&utm_source=copy",
+                caption: "Sản phẩm LỌ TỎA HƯƠNG siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review"
+            },
+            {
+                id: "vid_2",
+                filename: "02_NỒI CƠM MINI DKHOUSE 0.8L.mp4",
+                filepath: "d:/dự án antigravity/TikTok_Aff_Packager/output/Goi_Video_TikTokAff_Shop_Anh_Nam_-_TikTok_Affiliat_20260901_154110/videos/02_NỒI CƠM MINI DKHOUSE 0.8L.mp4",
+                title: "NỒI CƠM MINI DKHOUSE 0.8L",
+                size_mb: 4.8,
+                affiliate_link: "https://shop.tiktok.com/vn/pdp/1736610011019052232?_d=ekk0252j25jj76&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007680475078350718727%22%2C%22sc%22%3A%22copy%22%7D&checksum=911b0a7238aa2aabebf71c238598b2fbcefeaace6d81372042c48d5e9a7ef7e9&encode_params=MIIBUwQMxcJR7oVgOMFqbIPUBIIBL4v5SMmxuPoXEtPXZTOWFifV_85qhEsHfIdMiJOCRg3m1Rbaw6QAd3AXjZxh8ouVBAuNrtxiJbfMaq2ojgFXZnLAZ1Ww9f9CrgJOlQtOA51UHE3FD2PeMkrARMI4j6nZ3lS9HzWUlCgFUTA0EQ9bxyYk5cTwPJlGVf5lkPxXttlgqbEIOLRgNpwlndPHgqSI8NRkaa9YU_Xs1QLANx6eduRNYJxiYmGt0EerkpdOv4jcOuAXvGoAikegqWRueAbXz2bmEi9TCsM3h7kGOm7RBVteL6uqNDnqxl8Z3vQVEN1-1P_2w8XvQCK9jDqXlH1igldWRTdnF6Oenn38PyGMaQm8giuGtrKfCTM1JF8EGFf_WAAFMkzb9LvPylQyBUDizoSvt5wlFMzmNZ92aSREjQQQEgJq9I2SqIlhwHxfa53bIQ%3D%3D&og_info=%7B%22title%22%3A%22DKHOUSE+N%E1%BB%93i+C%C6%A1m+Mini+%C4%90a+N%C4%83ng+0.8L%2C+C%C3%B4ng+Su%E1%BA%A5t+200W%2C+Si%C3%AAu+B%E1%BB%81n%2C+Ti%E1%BA%BFt+Ki%E1%BB%87m+%C4%90i%E1%BB%87n%2C+Ph%C3%B9+H%E1%BB%A3p+1-2+Ng%C6%B0%E1%BB%9Di+%C4%82n%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2Fd41beb4208e14f99953a1e98e240a855~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAm-euwMH0a4ncZyHR8hFJoAtfXSKCpS5w7JkkVf6Z-B9tF3vgZq5VeDLcoUS5Vc6A&share_app_id=1233&share_iid=7680450628183164680&share_link_id=1ca18ff2-f53a-4457-815c-dffeb37c11ae&share_region=VN&social_share_type=15&timestamp=1788249964&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227513861754406323720%22%7D&u_code=dll01kl42bi47g&ug_btm=b0813%2Cb6661&ugbiz_name=UNKNOWN&unique_id=thichmacdep57&user_id=7032692262644712449&utm_campaign=client_share&utm_medium=android&utm_source=copy",
+                caption: "Sản phẩm NỒI CƠM MINI DKHOUSE 0.8L siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review"
+            },
+            {
+                id: "vid_3",
+                filename: "03_Bản nâng cấp gió mạnh hơn pin trâu.mp4",
+                filepath: "d:/dự án antigravity/TikTok_Aff_Packager/output/Goi_Video_TikTokAff_Shop_Anh_Nam_-_TikTok_Affiliat_20260901_154110/videos/03_Bản nâng cấp gió mạnh hơn pin trâu.mp4",
+                title: "Bản nâng cấp gió mạnh hơn pin trâu hơn",
+                size_mb: 6.2,
+                affiliate_link: "https://shop.tiktok.com/vn/pdp/1736825455046789110?_d=ekk0252j25jj76&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007680475707913242375%22%2C%22sc%22%3A%22copy%22%7D&checksum=78e7409f412ae7022fba3396a6f82778f277be2cce8c4d075cb23dc9579ce34d&encode_params=MIIBUwQMyfiXuLnLaxmE2rMLBIIBL3yICmscul2EE2bxqZ-CNyX3gKWA7wHrzkafd8ROJV2ddmB5E8Ji7OI8XggM0j6yKnNJv-l6-9oXRcvBA0Xsh1jzo_6zKmQgjpwV4PDwAKCOyZ_4pAmTjbbqxGfaFegYNWIOF4pAaRBA0FAE2uvclnBSCIZstJdnoUM8arOEYWR1JcowB68ld0LCUrOpsGWdvtPQ82AFwF0LRa3ch3VBJP_VhX2xvE5UW7CCFoevo1Mpk89tuLmsS8FE2D8F434nD6z6GJeoCItyCMHP3Zpwd8eUEgyJl3YgTjCyDoSwkIZZBgAStPCSbuuav55_9NnTyMtr75s3VCxURtpVsN6XKFfa72ayVy8cAG1TDfeChCAVePiWTANwgHUKPFqeOdJG-1z0V0Jx6cwnYdTcxBSHcAQQQAcdr49v6MrHk-CAUOZnGg%3D%3D&og_info=%7B%22title%22%3A%22Qu%E1%BA%A1t+C%E1%BA%A7m+Tay+Mini+M%E1%BB%9Bi+M11%3A+Thi%E1%BA%BFt+k%E1%BA%BF+nh%E1%BB%8F+g%E1%BB%8Dn%2C+120+t%E1%BB%91c+%C4%91%E1%BB%99+gi%C3%B3%2C+s%E1%BA%A1c+USB+ti%E1%BB%87n+l%E1%BB%A3i.+Ho%C3%A0n+h%E1%BA%A3o+cho+h%E1%BB%8Dc+sinh+v%C3%A0+ho%E1%BA%A1t+%C4%91%E1%BB%99ng+ngo%C3%A0i+tr%E1%BB%9Di.%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2F9f8ce86757ec48248f11d1fad00cc14e~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAm-euwMH0a4ncZyHR8hFJoAtfXSKCpS5w7JkkVf6Z-B9tF3vgZq5VeDLcoUS5Vc6A&share_app_id=1233&share_iid=7680450628183164680&share_link_id=eee2f1fc-6ac9-4774-8283-e3110f8e2fc4&share_region=VN&social_share_type=15&timestamp=1788250109&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227513861754406323720%22%7D&u_code=dll01kl42bi47g&ug_btm=b0813%2Cb6661&ugbiz_name=UNKNOWN&unique_id=thichmacdep57&user_id=7032692262644712449&utm_campaign=client_share&utm_medium=android&utm_source=copy",
+                caption: "Sản phẩm Bản nâng cấp gió mạnh hơn pin trâu hơn siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review"
+            },
+            {
+                id: "vid_4",
+                filename: "04_Bộ rổ nhựa kèm chậu 6 món.mp4",
+                filepath: "d:/dự án antigravity/TikTok_Aff_Packager/output/Goi_Video_TikTokAff_Shop_Anh_Nam_-_TikTok_Affiliat_20260901_154110/videos/04_Bộ rổ nhựa kèm chậu 6 món.mp4",
+                title: "Bộ rổ nhựa kèm chậu 6 món",
+                size_mb: 8.5,
+                affiliate_link: "https://shop.tiktok.com/vn/pdp/1731763546161907163?_d=ekk0252j25jj76&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007680475932848129810%22%2C%22sc%22%3A%22copy%22%7D&checksum=3db4e1e92edce7b2307163af7e4bf55c63178e1e5f94577a2079a834da2c4b3c&encode_params=MIIBUwQMZpO9-SqeERlGcLBbBIIBL5_NzelJyF4J7YRGKwsiLi8001Hy3q7lfyquhJoETsJwMc7DLgS8XJs9shfsvzNjeyY4HoI_TXJYDrflci_ls2nlxOOAvK3iucqjmroNaigiILUtXsFaqcXT2AvsaA68mSRI0hYJYQEhGngE8QOg4J_BiRmafEat9kiabPBwtDIJEarZkSd1FRn1knf4bJN6Cc6t0wBVMzMTmugw1j-bVAanoWjCrHQi2_qfJBuljQVSEYCcextAplagQIytAiPCrrOTppldUzIwgSnGe05n-51QR7IAMNCPCQEuA0zdLfn17hOU_bx8o3YchU6gxX2vapCFUfmfT4KfKp0so2zHBhok5nee1OlIDEATYLRLY75BLDndXiHKfZO6FsPzpd38Io_1D1ILgQnGJzRZvEZlewQQECKrmB_ZPiwujfxvWR2uvQ%3D%3D&og_info=%7B%22title%22%3A%22B%E1%BB%99+R%E1%BB%95+Nh%E1%BB%B1a+Vu%C3%B4ng+6+M%C3%B3n+K%C3%A8m+Ch%E1%BA%ADu+R%C3%A1o+N%C6%B0%E1%BB%9Bc+Hai+L%E1%BB%9Bp+Cao+C%E1%BA%A5p+-+Set+R%E1%BB%95+6+M%C3%B3n+G%E1%BB%93m+3+R%E1%BB%95+3+Ch%E1%BA%ADu%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2F125b54ab1bd34d03afcd4ae34e2a90b7~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAm-euwMH0a4ncZyHR8hFJoAtfXSKCpS5w7JkkVf6Z-B9tF3vgZq5VeDLcoUS5Vc6A&share_app_id=1233&share_iid=7680450628183164680&share_link_id=a417c7f5-aa20-4c2a-a432-828a1e74cc0a&share_region=VN&social_share_type=15&timestamp=1788250166&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227513861754406323720%22%7D&u_code=dll01kl42bi47g&ug_btm=b0813%2Cb6661&ugbiz_name=UNKNOWN&unique_id=thichmacdep57&user_id=7032692262644712449&utm_campaign=client_share&utm_medium=android&utm_source=copy",
+                caption: "Sản phẩm Bộ rổ nhựa kèm chậu 6 món siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review"
+            },
+            {
+                id: "vid_5",
+                filename: "05_Bộ cọ toilet 2 đầu Parroti Double C.mp4",
+                filepath: "d:/dự án antigravity/TikTok_Aff_Packager/output/Goi_Video_TikTokAff_Shop_Anh_Nam_-_TikTok_Affiliat_20260901_154110/videos/05_Bộ cọ toilet 2 đầu Parroti Double C.mp4",
+                title: "Bộ cọ toilet 2 đầu Parroti Double Clean DC01",
+                size_mb: 5.1,
+                affiliate_link: "https://shop.tiktok.com/vn/pdp/1729796469303905234?_d=ekk0252j25jj76&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007680475863414097682%22%2C%22sc%22%3A%22copy%22%7D&checksum=ddeafe1a9d71fd1790183e15ae477032925f2bff882d8557c1430c796f2efdbc&encode_params=MIIBUwQMkEJoyW7pTrbkfYlwBIIBLyCGqpf_82rAzwKuN4mTFljOSEP0h25z56b3g6iCNiwtW41QpYjvRFXrVCbi-_9D4JOZeyNZYwfY7ic8mH-saNZw7kc5pPaHEEoJR07oaYj4t8UrVnCrezfO-7Q_54dUvfn1nAaqKtrUWyzZhR9dL2Dyy3bbzfDPkQbz5TOOg62Ji-Zt_UrwuuP8FiFSc3b7mRcRC_EgbHD2BwsiEZf_fJeDWCQWaUV9HEyK3at_UVF6Ja1jAvfxzyUna_C6PCghHpyawYWcb4na7qp6HCmvgLzSID7XzV0a59SVG5zjlg5hwZP1qLqT2RRwikyJem88hlxJuH4aEBMNxRfKasSLFN33pgV0mczESU13bPqVni2ZTINv-DwL_0Uw6UR_Wx_8_jdXpuZMOyx1YNDRB3IJ4QQQrZHi6OorNsZM-NlABVR3ug%3D%3D&og_info=%7B%22title%22%3A%22C%E1%BB%8D+B%E1%BB%93n+C%E1%BA%A7u+Silicon%2C+C%E1%BB%8D+Toilet+Nh%C3%A0+V%E1%BB%87+Sinh+2+Trong+1%2C+C%C3%B3+Th%E1%BB%83+Treo+T%C6%B0%E1%BB%9Dng+V%C3%A0+C%C3%A2y+G%E1%BA%AFp+T%C3%B3c+Parroti+Silicon+-+SL02%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F8783dbae609e4b16b94843c4698d4a3c~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAm-euwMH0a4ncZyHR8hFJoAtfXSKCpS5w7JkkVf6Z-B9tF3vgZq5VeDLcoUS5Vc6A&share_app_id=1233&share_iid=7680450628183164680&share_link_id=14b19782-25c5-4bbe-9e56-124a66eaea6d&share_region=VN&social_share_type=15&timestamp=1788250141&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227513861754406323720%22%7D&u_code=dll01kl42bi47g&ug_btm=b0813%2Cb6661&ugbiz_name=UNKNOWN&unique_id=thichmacdep57&user_id=7032692262644712449&utm_campaign=client_share&utm_medium=android&utm_source=copy",
+                caption: "Sản phẩm Bộ cọ toilet 2 đầu Parroti Double Clean DC01 siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review"
+            }
+        ];
+
+        function restoreLast5Videos() {
+            videoList = JSON.parse(JSON.stringify(RECOVERED_5_VIDEOS));
+            renderTable();
+            saveDraft();
+            alert('🎉 Đã khôi phục lại toàn bộ 5 Video và Link giỏ hàng đầy đủ cho anh!');
+        }
+
+        function saveDraft() {
+            try {
+                const draft = {
+                    client_name: document.getElementById('client_name').value,
+                    project_title: document.getElementById('project_title').value,
+                    bulk_links: document.getElementById('bulk_links_input').value,
+                    videoList: videoList
+                };
+                localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            } catch (e) {
+                console.error("Save draft error:", e);
+            }
+        }
+
+        function loadDraft() {
+            try {
+                const saved = localStorage.getItem(DRAFT_KEY);
+                let loaded = false;
+                if (saved) {
+                    const draft = JSON.parse(saved);
+                    if (draft.client_name) document.getElementById('client_name').value = draft.client_name;
+                    if (draft.project_title) document.getElementById('project_title').value = draft.project_title;
+                    if (draft.bulk_links) document.getElementById('bulk_links_input').value = draft.bulk_links;
+                    if (draft.videoList && draft.videoList.length > 0) {
+                        videoList = draft.videoList;
+                        renderTable();
+                        loaded = true;
+                    }
+                }
+                if (!loaded && (!videoList || videoList.length === 0)) {
+                    // Tự động khôi phục 5 video cho tác giả
+                    videoList = JSON.parse(JSON.stringify(RECOVERED_5_VIDEOS));
+                    renderTable();
+                }
+            } catch (e) {
+                console.error("Load draft error:", e);
+                videoList = JSON.parse(JSON.stringify(RECOVERED_5_VIDEOS));
+                renderTable();
+            }
+        }
+
+        function showLoading(msg) {
+            document.getElementById('loading-text').innerText = msg || 'Đang xử lý...';
+            document.getElementById('loading-overlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.remove('active');
+        }
+
+        // 1. Chọn file qua Windows Native Dialog
+        async function pickFilesWindowsDialog() {
+            try {
+                const res = await fetch('/api/pick-files-dialog', { method: 'POST' });
+                const data = await res.json();
+                if (data.success && data.files && data.files.length > 0) {
+                    appendFilesToList(data.files);
+                }
+            } catch (err) {
+                alert('Lỗi mở hộp thoại chọn file: ' + err.message);
+            }
+        }
+
+        // 2. Chọn file qua Browser Input / Drag Drop
+        async function handleBrowserFiles(files) {
+            if (!files || files.length === 0) return;
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('videos', files[i]);
+            }
+
+            showLoading(`Đang nạp ${files.length} video...`);
+            try {
+                const res = await fetch('/api/upload-files', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                hideLoading();
+                if (data.success && data.files) {
+                    appendFilesToList(data.files);
+                }
+            } catch (err) {
+                hideLoading();
+                alert('Lỗi nạp file: ' + err.message);
+            }
+        }
+
+        // Drag and drop setup
+        const dropZone = document.getElementById('drop-zone');
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleBrowserFiles(e.dataTransfer.files);
+        });
+
+        function appendFilesToList(newFiles) {
+            newFiles.forEach(f => {
+                videoList.push({
+                    id: 'vid_' + Math.random().toString(36).substr(2, 9),
+                    filename: f.filename,
+                    filepath: f.filepath,
+                    title: f.title || f.filename,
+                    size_mb: f.size_mb || 0,
+                    affiliate_link: '',
+                    caption: `Sản phẩm ${f.title || f.filename} siêu hot! Link giỏ hàng góc trái nè cả nhà ơi. #tiktokshop #affiliate #review`
+                });
+            });
+            renderTable();
+        }
+
+        function clearAllVideos() {
+            if (videoList.length === 0) return;
+            if (confirm('Bạn có chắc muốn xóa danh sách video đang chọn?')) {
+                videoList = [];
+                renderTable();
+            }
+        }
+
+        function removeVideo(idx) {
+            videoList.splice(idx, 1);
+            renderTable();
+        }
+
+        function moveVideo(idx, dir) {
+            const targetIdx = idx + dir;
+            if (targetIdx < 0 || targetIdx >= videoList.length) return;
+            const temp = videoList[idx];
+            videoList[idx] = videoList[targetIdx];
+            videoList[targetIdx] = temp;
+            renderTable();
+        }
+
+        function applyBulkLinks() {
+            const lines = document.getElementById('bulk_links_input').value.trim().split('\n').map(l => l.trim()).filter(l => l);
+            if (lines.length === 0) {
+                alert('Vui lòng dán ít nhất 1 link vào ô trước khi bấm áp dụng!');
+                return;
+            }
+
+            lines.forEach((link, idx) => {
+                if (idx < videoList.length) {
+                    videoList[idx].affiliate_link = link;
+                }
+            });
+
+            renderTable();
+            alert(`Đã tự động điền ${Math.min(lines.length, videoList.length)} link vào các video tương ứng!`);
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('video-table-body');
+            document.getElementById('selected-count-badge').innerText = `${videoList.length} video đã chọn`;
+
+            saveDraft();
+
+            if (videoList.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-dim);">
+                            Chưa có video nào. Hãy bấm <strong>"Chọn File Từ Máy"</strong> hoặc kéo thả video vào khung phía trên!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            videoList.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 800; color: var(--accent-cyan);">#${String(idx + 1).padStart(2, '0')}</td>
+                    <td>
+                        <div style="font-weight: 600; color: #fff; word-break: break-all; font-size: 12px;">${item.filename}</div>
+                        <div style="font-size: 10px; color: var(--text-dim);">${item.size_mb} MB</div>
+                    </td>
+                    <td>
+                        <input type="text" class="table-input" value="${item.title || ''}" oninput="videoList[${idx}].title = this.value; saveDraft();" placeholder="Tên sản phẩm...">
+                    </td>
+                    <td>
+                        <input type="text" class="table-input" value="${item.affiliate_link || ''}" oninput="videoList[${idx}].affiliate_link = this.value; saveDraft();" placeholder="https://vt.tiktok.com/...">
+                    </td>
+                    <td style="text-align: center;">
+                        <div class="row-order-btns">
+                            <button class="btn btn-outline btn-sm" ${idx === 0 ? 'disabled' : ''} onclick="moveVideo(${idx}, -1)" title="Lên">⬆️</button>
+                            <button class="btn btn-outline btn-sm" ${idx === videoList.length - 1 ? 'disabled' : ''} onclick="moveVideo(${idx}, 1)" title="Xuống">⬇️</button>
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <button class="btn btn-outline btn-sm" style="color: var(--accent-pink);" onclick="removeVideo(${idx})" title="Xóa video này">❌</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copyText(text, msg) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(msg || 'Đã copy vào bộ nhớ tạm!');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                alert(msg || 'Đã copy vào bộ nhớ tạm!');
+            });
+        }
+
+        async function submitCustomPackage() {
+            if (videoList.length === 0) {
+                alert('Vui lòng chọn ít nhất 1 video để đóng gói!');
+                return;
+            }
+
+            const clientName = document.getElementById('client_name').value.trim() || 'Khách Hàng';
+            const projectTitle = document.getElementById('project_title').value.trim() || 'Gói Video TikTok Shop';
+
+            const formattedItems = videoList.map((v, i) => ({
+                stt: i + 1,
+                title: v.title || `Video ${i + 1}`,
+                product_name: v.title || `Sản Phẩm ${i + 1}`,
+                affiliate_link: v.affiliate_link || `https://vt.tiktok.com/ZS${i+1}99abc/`,
+                caption: v.caption || `Trải nghiệm ${v.title} cực xịn xò! #tiktokshop #affiliate`,
+                hashtags: '#tiktokshop #affiliate #review',
+                src_video_path: v.filepath
+            }));
+
+            showLoading(`Đang đóng gói ${formattedItems.length} video và link giỏ hàng...`);
+
+            try {
+                const res = await fetch('/api/create-package', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_name: clientName,
+                        project_title: projectTitle,
+                        items: formattedItems
+                    })
+                });
+                const text = await res.text();
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    hideLoading();
+                    alert('Lỗi phản hồi máy chủ: ' + text.substring(0, 300));
+                    return;
+                }
+                hideLoading();
+
+                if (data.success) {
+                    currentResult = data;
+                    const onlineUrl = data.public_view_url || (window.location.origin + data.view_url);
+
+                    document.getElementById('result-desc').innerHTML = `
+                        <div style="background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 10px; padding: 14px; margin-top: 10px; text-align: left;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                                🌐 LINK WEB ONLINE GỬI KHÁCH:
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px;">
+                                <input type="text" readonly value="${onlineUrl}" style="flex: 1; min-width: 240px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                                <button class="btn btn-cyan" onclick="copyText('${onlineUrl}', '📋 Đã copy link online gửi khách!')">
+                                    📋 Copy Link
+                                </button>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-sub); line-height: 1.5;">
+                                ✨ Khách có thể mở link này trên điện thoại/máy tính để quản lý video. <strong>Khi nào khách tick đã đăng đủ 100% video</strong> thì link sẽ tự động đóng lại!
+                            </div>
+                        </div>
+                    `;
+                    
+                    const btnsContainer = document.querySelector('#result-box .result-links-grid');
+                    btnsContainer.innerHTML = `
+                        <a href="${onlineUrl}" target="_blank" class="btn btn-cyan" style="font-size: 14px;">
+                            🌐 Mở Xem Thử Link Online (Tab Mới)
+                        </a>
+                        <a href="${data.download_zip_url}" class="btn btn-primary" style="font-size: 14px;">
+                            📦 Tải File ZIP Về Máy
+                        </a>
+                        <button class="btn btn-outline" style="grid-column: 1 / -1;" onclick="openPath('${data.folder_url.replace(/\\/g, '/')}')">
+                            📁 Mở Thư Mục Bàn Giao (Windows Explorer)
+                        </button>
+                    `;
+
+                    document.getElementById('result-box').classList.add('show');
+                    loadPackages();
+
+                    window.open(onlineUrl, '_blank');
+                } else {
+                    alert('Lỗi: ' + (data.error || 'Không thể tạo gói'));
+                }
+            } catch (err) {
+                hideLoading();
+                alert('Lỗi kết nối: ' + err.message);
+            }
+        }
+
+        async function createDemoSample() {
+            showLoading('Đang sinh 5 video AI mẫu và tạo gói demo hoàn chỉnh...');
+            try {
+                const res = await fetch('/api/create-demo-sample', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await res.json();
+                hideLoading();
+                if (data.success) {
+                    const folderName = data.package_dir.split(/[\\\\/]/).pop();
+                    const onlineUrl = data.public_view_url || (window.location.origin + '/view/' + folderName);
+                    currentResult = {
+                        html_url: data.html_path,
+                        folder_url: data.package_dir,
+                        zip_url: data.zip_path,
+                        view_url: '/view/' + folderName,
+                        public_view_url: onlineUrl,
+                        download_zip_url: '/download-zip/' + folderName
+                    };
+                    document.getElementById('result-desc').innerHTML = `
+                        <div style="background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 10px; padding: 14px; margin-top: 10px; text-align: left;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 6px;">
+                                🌐 LINK WEB ONLINE DEMO:
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px;">
+                                <input type="text" readonly value="${onlineUrl}" style="flex: 1; min-width: 240px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                                <button class="btn btn-cyan" onclick="copyText('${onlineUrl}', '📋 Đã copy link online demo!')">
+                                    📋 Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const btnsContainer = document.querySelector('#result-box .result-links-grid');
+                    btnsContainer.innerHTML = `
+                        <a href="${currentResult.view_url}" target="_blank" class="btn btn-cyan" style="font-size: 14px;">
+                            🌐 Mở Dashboard Trong Tab Mới
+                        </a>
+                        <a href="${currentResult.download_zip_url}" class="btn btn-primary" style="font-size: 14px;">
+                            📦 Tải File ZIP Về Máy
+                        </a>
+                        <button class="btn btn-outline" style="grid-column: 1 / -1;" onclick="openPath('${data.package_dir.replace(/\\/g, '/')}')">
+                            📁 Mở Thư Mục Bàn Giao (Windows Explorer)
+                        </button>
+                    `;
+
+                    document.getElementById('result-box').classList.add('show');
+                    loadPackages();
+                    window.open(currentResult.view_url, '_blank');
+                }
+            } catch (err) {
+                hideLoading();
+                alert('Lỗi: ' + err.message);
+            }
+        }
+
+        async function openPath(path) {
+            if (!path) return;
+            await fetch('/api/open-path', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: path })
+            });
+        }
+
+        async function reopenLink(pkgName) {
+            try {
+                const res = await fetch('/api/reopen-link', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ package_name: pkgName })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('🎉 Đã MỞ LẠI link thành công cho khách tiếp tục truy cập!');
+                    loadPackages();
+                }
+            } catch (e) {
+                alert('Lỗi: ' + e.message);
+            }
+        }
+
+        async function loadPackages() {
+            try {
+                const res = await fetch('/api/list-packages');
+                const data = await res.json();
+                const container = document.getElementById('history-list');
+                container.innerHTML = '';
+
+                if (!data.packages || data.packages.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 30px; color: var(--text-dim); font-size: 12px;">Chưa có gói nào.</div>';
+                    return;
+                }
+
+                data.packages.forEach(pkg => {
+                    const onlineUrl = pkg.public_view_url || (window.location.origin + pkg.view_url);
+                    const isDone = pkg.is_completed;
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;">
+                            <div style="font-size: 12px; font-weight: 700; color: #fff; word-break: break-all;">🎬 ${pkg.name}</div>
+                            ${isDone ? '<span style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; white-space: nowrap;">✅ ĐÃ XONG 100%</span>' : '<span style="background: rgba(0, 242, 254, 0.2); color: #00f2fe; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; white-space: nowrap;">⚡ ĐANG ĐĂNG</span>'}
+                        </div>
+                        <div style="font-size: 10px; color: var(--text-dim); margin-top: 2px;">
+                            📅 ${pkg.date} ${pkg.total_videos ? `• Tiến độ: <strong style="color: #fff;">${pkg.posted_count}/${pkg.total_videos} video</strong>` : ''}
+                        </div>
+                        
+                        ${!isDone ? `
+                        <div style="background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 6px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 11px; color: var(--accent-cyan); font-weight: 700;">🌐 Link Gửi Khách</span>
+                            <button class="btn btn-cyan btn-sm" style="padding: 2px 8px; font-size: 10px;" onclick="copyText('${onlineUrl}', '📋 Đã copy link web gửi khách!')">
+                                📋 Copy Link
+                            </button>
+                        </div>
+                        ` : `
+                        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 6px; font-size: 11px; color: #10b981; display: flex; justify-content: space-between; align-items: center;">
+                            <span>✨ Khách đã tick đủ 100% (Link đã tự đóng)</span>
+                            <button class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 10px; color: #fff;" onclick="reopenLink('${pkg.name}')">🔓 Mở Lại</button>
+                        </div>
+                        `}
+
+                        <div style="display: flex; gap: 4px; margin-top: 6px;">
+                            <a href="/view/${pkg.name}" target="_blank" class="btn btn-cyan btn-sm" style="flex: 1;">👁️ Mở Tab</a>
+                            <a href="/download-zip/${pkg.name}" class="btn btn-primary btn-sm" style="flex: 1;">📦 Tải ZIP</a>
+                            <button class="btn btn-outline btn-sm" onclick="openPath('${pkg.dir.replace(/\\/g, '/')}')">📁 Thư mục</button>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Event listeners for inputs auto-save
+        document.getElementById('client_name').addEventListener('input', saveDraft);
+        document.getElementById('project_title').addEventListener('input', saveDraft);
+        document.getElementById('bulk_links_input').addEventListener('input', saveDraft);
+
+        // Load data on startup
+        loadDraft();
+        loadPackages();
+    </script>
+</body>
+</html>

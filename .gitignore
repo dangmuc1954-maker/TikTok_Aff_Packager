@@ -1,0 +1,21 @@
+# Python & Virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Local Video & Data (tránh đẩy 3GB video lên Git/Vercel gây lỗi tràn bộ nhớ)
+output/
+sample_videos/
+temp_uploads/
+
+# Windows Binaries & Logs
+cloudflared.exe
+cloudflared.log
+
+# IDE & OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
